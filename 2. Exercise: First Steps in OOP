@@ -1,1 +1,205 @@
 # 1. Shop
+
+
+class Shop:
+    def __init__(self, name, items):
+        self.name = name
+        self.items = items
+
+    def get_items_count(self):
+        return len(self.items)
+
+
+# 2. Hero
+
+
+class Hero:
+    def __init__(self, name, health):
+        self.name = name
+        self.health = health
+
+    def defend(self, damage):
+        if self.health - damage <= 0:
+            self.health = 0
+
+            return f"{self.name} was defeated"
+
+        self.health -= damage
+
+    def heal(self, amount):
+        self.health += amount
+
+
+# 3. Employee
+
+
+class Employee:
+    def __init__(self, id, first_name, last_name, salary):
+        self.id = id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.salary = salary
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
+    def get_annual_salary(self):
+        return self.salary * 12
+
+    def raise_salary(self, amount):
+        self.salary += amount
+
+        return self.salary
+
+
+# 4. Cup
+
+
+class Cup:
+    def __init__(self, size, quantity):
+        self.size = size
+        self.quantity = quantity
+
+    def fill(self, quantity):
+        if self.quantity + quantity <= self.size:
+            self.quantity += quantity
+
+    def status(self):
+        return self.size - self.quantity
+
+
+# 5. Flower
+
+
+class Flower:
+    def __init__(self, name, water_requirements):
+        self.name = name
+        self.water_requirements = water_requirements
+        self.is_happy = False
+
+    def water(self, quantity):
+        if quantity >= self.water_requirements:
+            self.is_happy = True
+
+    def status(self):
+        return f"{self.name} is {'' if self.is_happy else 'not '}happy"
+
+
+# 6. SteamUser
+
+
+class SteamUser:
+    def __init__(self, username: str, games: list):
+        self.username = username
+        self.games = games
+        self.played_hours = 0
+
+    def play(self, game, hours):
+        if game not in self.games:
+            return f"{game} is not in library"
+
+        self.played_hours += hours
+
+        return f"{self.username} is playing {game}"
+
+    def buy_game(self, game):
+        if game in self.games:
+            return f"{game} is already in your library"
+
+        self.games.append(game)
+
+        return f"{self.username} bought {game}"
+
+    def status(self):
+        return f"{self.username} has {len(self.games)} games. Total play time: {self.played_hours}"
+
+
+# 7. Programmer
+
+
+class Programmer:
+    def __init__(self, name: str, language: str, skills: int):
+        self.name = name
+        self.language = language
+        self.skills = skills
+
+    def watch_course(self, course_name, language, skills_earned):
+        if self.language != language:
+            return f"{self.name} does not know {language}"
+
+        self.skills += skills_earned
+
+        return f"{self.name} watched {course_name}"
+
+    def change_language(self, new_language, skills_needed):
+        if new_language == self.language:
+            return f"{self.name} already knows {new_language}"
+        elif self.skills < skills_needed:
+            return f"{self.name} needs {skills_needed - self.skills} more skills"
+        else:
+            previous_language = self.language
+            self.language = new_language
+
+            return f"{self.name} switched from {previous_language} to {new_language}"
+
+
+# 8. Pokemon Battle
+
+
+# project
+
+
+# pokemon.py
+
+
+class Pokemon:                                                 
+    def __init__(self, name: str, health: int):
+        self.name = name
+        self.health = health
+
+    def pokemon_details(self):
+        return f"{self.name} with health {self.health}"
+
+
+# trainer.py
+
+
+from project.pokemon import Pokemon
+
+
+class Trainer:
+    def __init__(self, name: str):
+        self.name = name
+        self.pokemons = []
+
+    def add_pokemon(self, pokemon: Pokemon):
+        if pokemon in self.pokemons:
+            return "This pokemon is already caught"
+
+        self.pokemons.append(pokemon)
+
+        return f"Caught {pokemon.pokemon_details()}"
+
+    def release_pokemon(self, pokemon_name: str):
+        try:
+            pokemon = next(filter(lambda p: p.name == pokemon_name, self.pokemons))
+
+            self.pokemons.remove(pokemon)
+
+            return f"You have released {pokemon_name}"
+
+        except StopIteration:
+            return "Pokemon is not caught"
+
+    def trainer_data(self):
+        details = "\n".join([f"- {pokemon.pokemon_details()}" for pokemon in self.pokemons])
+
+        return f"Pokemon Trainer {self.name}\nPokemon count {len(self.pokemons)}\n{details}"
+
+
+
+
+
+
+
+
